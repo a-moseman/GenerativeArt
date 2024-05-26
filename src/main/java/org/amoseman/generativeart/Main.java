@@ -92,6 +92,6 @@ public class Main {
         piece.addFilter(new Scrambulation(4, 0.045, Direction.VERTICAL));
 
         piece.addFilter(new Text(20, 620, "amoseman 2024-05-25", new float[]{1, 1, 1, 0.5f}, new Font("Monospaced", Font.PLAIN, 12)));
-        piece.build("bmp");
+        piece.build("png");
     }
 }
