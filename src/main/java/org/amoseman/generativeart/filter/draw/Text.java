@@ -1,5 +1,6 @@
 package org.amoseman.generativeart.filter.draw;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.filter.Grow;
 import org.amoseman.generativeart.image.ImageData;
@@ -12,10 +13,10 @@ public class Text implements Filter {
     private final float x;
     private final float y;
     private final String text;
-    private final float[] color;
+    private final ColorValue color;
     private final Font font;
 
-    public Text(float x, float y, String text, float[] color, Font font) {
+    public Text(float x, float y, String text, ColorValue color, Font font) {
         this.x = x;
         this.y = y;
         this.text = text;
@@ -30,14 +31,14 @@ public class Text implements Filter {
         graphics.setFont(font);
         int px = Math.round(x);
         int py = Math.round(y);
-        graphics.setColor(new Color(color[0], color[1], color[2], color[3]));
+        graphics.setColor(color.toColor());
         graphics.drawString(text, px, py);
         for (int x = 0; x < data.getWidth(); x++) {
             for (int y = 0; y < data.getHeight(); y++) {
                 Color c = new Color(image.getRGB(x, y));
                 float[] v = new float[4];
                 v = c.getColorComponents(v);
-                data.set(x, y, v);
+                data.set(x, y, new ColorValue(v[0], v[1], v[2], v[3]));
             }
         }
     }

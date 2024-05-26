@@ -1,6 +1,7 @@
 package org.amoseman.generativeart.filter.noise;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 import org.spongepowered.noise.LatticeOrientation;
@@ -10,8 +11,8 @@ import org.spongepowered.noise.NoiseQualitySimplex;
 import java.util.Random;
 
 public class FBMNoise implements Filter {
-    private final float[] a;
-    private final float[] b;
+    private final ColorValue a;
+    private final ColorValue b;
     private final int seed;
     private final int octaves;
     private final double frequency;
@@ -19,7 +20,7 @@ public class FBMNoise implements Filter {
     private final double lacunarity;
     private final double persistence;
 
-    public FBMNoise(float[] a, float[] b, long seed, int octaves, double frequency, double amplitude, double lacunarity, double persistence) {
+    public FBMNoise(ColorValue a, ColorValue b, long seed, int octaves, double frequency, double amplitude, double lacunarity, double persistence) {
         this.a = a;
         this.b = b;
         this.seed = (int) seed;
@@ -70,7 +71,7 @@ public class FBMNoise implements Filter {
         }
         for (int x = 0; x < data.getWidth(); x++) {
             for (int y = 0; y < data.getHeight(); y++) {
-                data.draw(x, y, ColorMath.lerp(a, b, (float) heightMap[x][y]));
+                data.draw(x, y, ColorValue.lerp(a, b, (float) heightMap[x][y]));
             }
         }
     }

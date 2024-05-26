@@ -1,5 +1,6 @@
 package org.amoseman.generativeart.filter;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
@@ -19,14 +20,14 @@ public class Average implements Filter {
             throw new RuntimeException("Images must be same size");
         }
         for (int i = 0; i < data.getSize(); i++) {
-            float[] a = data.get(i);
-            float[] b = secondary.get(i);
-            float[] c = new float[]{
-                    a[0] * ratio + b[0] * (1 - ratio),
-                    a[1] * ratio + b[1] * (1 - ratio),
-                    a[2] * ratio + b[2] * (1 - ratio),
-                    a[3] * ratio + b[3] * (1 - ratio)
-            };
+            ColorValue a = data.get(i);
+            ColorValue b = secondary.get(i);
+            ColorValue c = new ColorValue(
+                    a.getRGB() * ratio + b.getRed() * (1 - ratio),
+                    a.getGreen() * ratio + b.getGreen() * (1 - ratio),
+                    a.getBlue() * ratio + b.getBlue() * (1 - ratio),
+                    a.getAlpha() * ratio + b.getAlpha() * (1 - ratio)
+            );
             data.set(i, c);
         }
     }

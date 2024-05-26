@@ -1,15 +1,16 @@
 package org.amoseman.generativeart.filter.noise;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
 
 public class Noise implements Filter {
-    private final float[][] palette;
+    private final ColorValue[] palette;
 
-    public Noise(float[]... palette) {
+    public Noise(ColorValue... palette) {
         this.palette = palette;
     }
 
@@ -20,21 +21,21 @@ public class Noise implements Filter {
     @Override
     public void apply(ImageData data, Random random) {
         for (int i = 0; i < data.getSize(); i++) {
-            float[] a = data.get(i);
-            float[] b = randomColor(random);
-            float[] c = ColorMath.add(a, b);
+            ColorValue a = data.get(i);
+            ColorValue b = randomColor(random);
+            ColorValue c = a.add(b);
             data.set(i, c);
         }
     }
 
-    private float[] randomColor(Random random) {
+    private ColorValue randomColor(Random random) {
         if (null == palette || 0 == palette.length) {
-            return new float[]{
+            return new ColorValue(
                     random.nextFloat(),
                     random.nextFloat(),
                     random.nextFloat(),
                     1
-            };
+            );
         }
         return palette[random.nextInt(palette.length)];
     }

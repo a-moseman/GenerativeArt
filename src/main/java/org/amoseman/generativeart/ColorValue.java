@@ -1,5 +1,8 @@
 package org.amoseman.generativeart;
 
+import java.awt.*;
+import java.nio.ByteBuffer;
+
 public class ColorValue {
     private static final float DEFAULT_ALPHA = 1f;
     private final float r;
@@ -29,6 +32,41 @@ public class ColorValue {
         this.g = g;
         this.b = b;
         this.a = DEFAULT_ALPHA;
+    }
+
+    public ColorValue(int rgb) {
+        ByteBuffer buf = ByteBuffer.allocate(4);
+        buf.putInt(rgb);
+        byte[] bytes = buf.array();
+        int r = bytes[0] - Byte.MIN_VALUE;
+        int g = bytes[1] - Byte.MIN_VALUE;
+        int b = bytes[2] - Byte.MIN_VALUE;
+        int a = bytes[3] - Byte.MIN_VALUE;
+        this.r = (float) r / 255;
+        this.g = (float) g / 255;
+        this.b = (float) b / 255;
+        this.a = (float) a / 255;
+
+    }
+
+    public Color toColor(){
+        return new Color(r, g, b, a);
+    }
+
+    public int getRGB() {
+        int r = (int) (this.r * 255);
+        int g = (int) (this.g * 255);
+        int b = (int) (this.b * 255);
+        int a = (int) (this.a * 255);
+        byte[] bytes = new byte[4];
+        bytes[0] = (byte) (r + Byte.MIN_VALUE);
+        bytes[1] = (byte) (g + Byte.MIN_VALUE);
+        bytes[2] = (byte) (b + Byte.MIN_VALUE);
+        bytes[3] = (byte) (a + Byte.MIN_VALUE);
+        ByteBuffer buf = ByteBuffer.allocate(4);
+        buf.put(bytes);
+        buf.rewind();
+        return buf.getInt();
     }
 
     public float distance(ColorValue other) {
@@ -91,4 +129,5 @@ public class ColorValue {
     public static ColorValue YELLOW = new ColorValue(1, 1, 0);
     public static ColorValue MAGENTA = new ColorValue(1, 0, 1);
     public static ColorValue CYAN = new ColorValue(0, 1, 1);
+    public static ColorValue TRANSPARENT = new ColorValue(0, 0, 0, 0);
 }

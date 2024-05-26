@@ -1,5 +1,6 @@
 package org.amoseman.generativeart.filter;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
@@ -17,14 +18,19 @@ public class Blur implements Filter {
                         if (x2 < 0 || x2 >= data.getWidth() || y2 < 0 || y2 >= data.getHeight()) {
                             continue;
                         }
-                        float[] b = data.get(x2, y2);
-                        value[0] += b[0] / 9;
-                        value[1] += b[1] / 9;
-                        value[2] += b[2] / 9;
-                        value[3] += b[3] / 9;
+                        ColorValue b = data.get(x2, y2);
+                        value[0] += b.getRed() / 9;
+                        value[1] += b.getGreen() / 9;
+                        value[2] += b.getBlue() / 9;
+                        value[3] += b.getAlpha() / 9;
                     }
                 }
-                data.set(x, y, value);
+                data.set(x, y, new ColorValue(
+                        value[0],
+                        value[1],
+                        value[2],
+                        value[3]
+                ));
             }
         }
     }

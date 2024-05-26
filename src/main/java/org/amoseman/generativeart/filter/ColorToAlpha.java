@@ -1,15 +1,16 @@
 package org.amoseman.generativeart.filter;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
 
 public class ColorToAlpha implements Filter {
-    private final float[] color;
+    private final ColorValue color;
     private final double threshhold;
 
-    public ColorToAlpha(float[] color, double threshold) {
+    public ColorToAlpha(ColorValue color, double threshold) {
         this.color = color;
         this.threshhold = threshold;
     }
@@ -17,9 +18,9 @@ public class ColorToAlpha implements Filter {
     @Override
     public void apply(ImageData data, Random random) {
         for (int i = 0; i < data.getSize(); i++) {
-            float[] a = data.get(i);
-            if (ColorMath.distance(a, color) < threshhold) {
-                data.set(i, new float[]{0, 0, 0, 0});
+            ColorValue a = data.get(i);
+            if (a.distance(color) < threshhold) {
+                data.set(i, ColorValue.TRANSPARENT);
             }
         }
     }

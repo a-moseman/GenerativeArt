@@ -1,12 +1,13 @@
 package org.amoseman.generativeart.filter.draw;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
 
 public class Tree implements Filter {
-    private final float[] value;
+    private final ColorValue value;
     private final float x0;
     private final float y0;
     private final float branches;
@@ -22,7 +23,7 @@ public class Tree implements Filter {
     private final float branchLengthDecay;
     private final float branchLengthDeviationDecay;
 
-    public Tree(float[] value, float x0, float y0, float branches, float branchDecay, float branchSurvivalProbability, float branchSurvivalProbabilityDecay, int maxDepth, float angle, float angleDeviation, float angleDeviationDecay, float branchLength, float branchLengthDeviation, float branchLengthDecay, float branchLengthDeviationDecay) {
+    public Tree(ColorValue value, float x0, float y0, float branches, float branchDecay, float branchSurvivalProbability, float branchSurvivalProbabilityDecay, int maxDepth, float angle, float angleDeviation, float angleDeviationDecay, float branchLength, float branchLengthDeviation, float branchLengthDecay, float branchLengthDeviationDecay) {
         this.value = value;
         this.x0 = x0;
         this.y0 = y0;

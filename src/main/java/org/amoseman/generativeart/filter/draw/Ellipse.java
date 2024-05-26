@@ -1,5 +1,6 @@
 package org.amoseman.generativeart.filter.draw;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
@@ -10,11 +11,11 @@ public class Ellipse implements Filter {
     private final float y;
     private final float a;
     private final float b;
-    private final float[] value;
+    private final ColorValue value;
     private final int precision;
     private final boolean fill;
 
-    public Ellipse(float x, float y, float a, float b, float[] value, int precision, boolean fill) {
+    public Ellipse(float x, float y, float a, float b, ColorValue value, int precision, boolean fill) {
         this.x = x;
         this.y = y;
         this.a = a;

@@ -1,6 +1,7 @@
 package org.amoseman.generativeart.image;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 
 import java.awt.*;
@@ -14,7 +15,7 @@ public class ImageData {
     private final int width;
     private final int height;
     private final int size;
-    private final float[][] pixels;
+    private final ColorValue[] pixels;
 
     /**
      * Instantiate an image data.
@@ -25,7 +26,10 @@ public class ImageData {
         this.width = width;
         this.height = height;
         this.size = width * height;
-        this.pixels = new float[size][4];
+        this.pixels = new ColorValue[size];
+        for (int i = 0; i < size; i++) {
+            pixels[i] = ColorValue.BLACK;
+        }
     }
 
     /**
@@ -34,7 +38,7 @@ public class ImageData {
      * @param height the height of the image data.
      * @param pixels the data to use.
      */
-    public ImageData(int width, int height, float[][] pixels) {
+    public ImageData(int width, int height, ColorValue[] pixels) {
         this.width = width;
         this.height = height;
         this.size = width * height;
@@ -52,12 +56,12 @@ public class ImageData {
         this.width = image.getWidth();
         this.height = image.getHeight();
         this.size = width * height;
-        this.pixels = new float[size][4];
+        this.pixels = new ColorValue[size];
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 float[] rgb = new float[4];
-                rgb = new Color(image.getRGB(x, y)).getRGBComponents(rgb);
-                pixels[x + y * width] =  new float[]{rgb[0], rgb[1], rgb[2], rgb[3]};
+                rgb = new Color(image.getRGB(x, y)).getColorComponents(rgb);
+                pixels[x + y * width] =  new ColorValue(rgb[0], rgb[1], rgb[2], rgb[3]);
             }
         }
     }
@@ -86,15 +90,15 @@ public class ImageData {
         return size;
     }
 
-    public float[] get(int x, int y) {
+    public ColorValue get(int x, int y) {
         return pixels[x + y * width];
     }
 
-    public float[] get(int index) {
+    public ColorValue get(int index) {
         return pixels[index];
     }
 
-    public void set(int x, int y, float[] value) {
+    public void set(int x, int y, ColorValue value) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             // don't draw outside image
             return;
@@ -102,25 +106,22 @@ public class ImageData {
         set(x + y * width, value);
     }
 
-    public void set(int index, float[] value) {
-        if (value.length != 4) {
-            throw new RuntimeException("Pixel value must of float array of length 4");
-        }
+    public void set(int index, ColorValue value) {
         pixels[index] = value;
     }
 
-    public void draw(int x, int y, float[] value) {
+    public void draw(int x, int y, ColorValue value) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             // don't draw outside image
             return;
         }
-        float[] current = get(x, y);
-        set(x, y, ColorMath.add(current, value));
+        ColorValue current = get(x, y);
+        set(x, y, current.add(value));
     }
 
-    public void draw(int index, float[] value) {
-        float[] current = get(index);
-        set(index, ColorMath.add(current, value));
+    public void draw(int index, ColorValue value) {
+        ColorValue current = get(index);
+        set(index, current.add(value));
     }
 
     /**
@@ -131,8 +132,8 @@ public class ImageData {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                float[] value = get(x, y);
-                image.setRGB(x, y, new Color(value[0], value[1], value[2], value[3]).getRGB());
+                ColorValue value = get(x, y);
+                image.setRGB(x, y, value.getRGB());
 
             }
         }

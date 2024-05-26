@@ -1,5 +1,6 @@
 package org.amoseman.generativeart.filter;
 
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
@@ -15,10 +16,13 @@ public class Brighten implements Filter {
     public void apply(ImageData data, Random random) {
         float d = strength / 3;
         for (int i = 0; i < data.getSize(); i++) {
-            float[] value = data.get(i);
-            value[0] = Math.min(1, value[0] + d);
-            value[1] = Math.min(1, value[1] + d);
-            value[2] = Math.min(1, value[2] + d);
+            ColorValue value = data.get(i);
+            data.set(i, new ColorValue(
+                    Math.min(1, value.getRed() + d),
+                    Math.min(1, value.getGreen() + d),
+                    Math.min(1, value.getBlue() + d),
+                    value.getAlpha()
+            ));
             data.set(i, value);
         }
     }

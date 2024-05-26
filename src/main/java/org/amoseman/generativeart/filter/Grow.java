@@ -1,6 +1,7 @@
 package org.amoseman.generativeart.filter;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.security.SecureRandom;
@@ -9,15 +10,15 @@ import java.util.Random;
 public class Grow implements Filter {
     private final int n;
     private final double ignoreThreshold;
-    private final float[][] ignore;
+    private final ColorValue[] ignore;
 
-    public Grow(int n, double ignoreThreshold, float[]... ignore) {
+    public Grow(int n, double ignoreThreshold, ColorValue... ignore) {
         this.n = n;
         this.ignoreThreshold = ignoreThreshold;
         this.ignore = ignore;
     }
 
-    public Grow(int n, float[]... ignore) {
+    public Grow(int n, ColorValue... ignore) {
         this.n = n;
         this.ignoreThreshold = 0;
         this.ignore = ignore;
@@ -30,8 +31,8 @@ public class Grow implements Filter {
             int x = random.nextInt(data.getWidth());
             int y = random.nextInt(data.getHeight());
             boolean flag = false;
-            for (float[] ign : ignore) {
-                if (ColorMath.distance(data.get(x, y), ign) < ignoreThreshold) {
+            for (ColorValue ign : ignore) {
+                if (data.get(x, y).distance(ign) < ignoreThreshold) {
                     flag = true;
                     break;
                 }
@@ -62,7 +63,7 @@ public class Grow implements Filter {
                         break;
                 }
             } while (x + dx < 0 || x + dx >= data.getWidth() || y + dy < 0 || y + dy >= data.getHeight());
-            float[] v = data.get(x, y);
+            ColorValue v = data.get(x, y);
             data.set(x + dx, y + dy, v);
             i++;
         }
