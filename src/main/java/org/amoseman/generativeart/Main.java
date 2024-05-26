@@ -14,7 +14,8 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        long seed = System.currentTimeMillis();
+        //long seed = System.currentTimeMillis();
+        long seed = 1716741432348L;
         Piece piece = new Piece(640, 640, seed);
         piece.addFilter(new FBMNoise(
                 new float[]{0, 0, 0, 1},
@@ -90,7 +91,7 @@ public class Main {
         piece.addFilter(new Composite(stars, new float[]{0, 0, 0, 0}, 0));
         piece.addFilter(new Scrambulation(4, 0.045, Direction.VERTICAL));
 
-        piece.addFilter(new Text(20, 620, "Glyphical 2024-05-25", new float[]{1, 1, 1, 0.5f}, new Font("Monospaced", Font.PLAIN, 12)));
+        piece.addFilter(new Text(20, 620, "amoseman 2024-05-25", new float[]{1, 1, 1, 0.5f}, new Font("Monospaced", Font.PLAIN, 12)));
         piece.build("bmp");
     }
 }
