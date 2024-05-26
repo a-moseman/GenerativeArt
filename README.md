@@ -6,6 +6,10 @@ Each branch corresponds to a piece, identified by the seed used.
 
 To reconstruct a given piece, checkout to the noted commit and use the provided seed. 
 
+## Libraries
+
+![SpongePowered's noise](https://github.com/SpongePowered/noise)
+
 ## Pieces
 
 Here is each of the pieces with the seed used and the last commit value.
