@@ -1,4 +1,4 @@
-package org.amoseman.generativeart;
+package org.amoseman.generativeart.piece;
 
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
@@ -37,8 +37,7 @@ public class Piece {
     }
 
     public void build(String format) {
-        long now = System.currentTimeMillis();
-        String name = String.format("%d.%s", now, format);
+        String name = String.format("./pieces/%d.%s", seed, format);
         try {
             ImageIO.write(data.asImage(), format, new File(name));
         }
@@ -47,5 +46,9 @@ public class Piece {
             return;
         }
         System.out.printf("Wrote %s to file with %d as the seed", name, seed);
+    }
+
+    public ImageData getData() {
+        return data;
     }
 }

@@ -4,7 +4,7 @@ import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
 
-public class RemoveAlpha implements Filter {
+public class RemoveTransparency implements Filter {
     @Override
     public void apply(ImageData data, Random random) {
         for (int i = 0; i < data.getSize(); i++) {

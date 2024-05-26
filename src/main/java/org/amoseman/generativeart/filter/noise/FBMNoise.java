@@ -1,6 +1,7 @@
-package org.amoseman.generativeart.filter;
+package org.amoseman.generativeart.filter.noise;
 
 import org.amoseman.generativeart.ColorMath;
+import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 import org.spongepowered.noise.LatticeOrientation;
 import org.spongepowered.noise.Noise;
@@ -43,7 +44,6 @@ public class FBMNoise implements Filter {
                     double y_d = ((double) y / data.getHeight()) * freq;
                     double height = Noise.simplexStyleGradientCoherentNoise3D(x_d, y_d, 0, s, LatticeOrientation.XY_BEFORE_Z, NoiseQualitySimplex.STANDARD) * amp;
                     heightMap[x][y] += height;
-                    //data.draw(x, y, ColorMath.lerp(a, b, (float) height));
                 }
             }
             freq *= lacunarity;

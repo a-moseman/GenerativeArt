@@ -2,16 +2,21 @@ plugins {
     id 'java'
 }
 
-group = 'org.example'
+group = 'org.amoseman'
 version = '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://repo.spongepowered.org/repository/maven-public/"
+    }
 }
 
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation 'org.spongepowered:noise:2.0.0-SNAPSHOT'
 }
 
 test {

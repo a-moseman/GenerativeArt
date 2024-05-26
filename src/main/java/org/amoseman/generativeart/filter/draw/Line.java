@@ -1,5 +1,6 @@
-package org.amoseman.generativeart.filter;
+package org.amoseman.generativeart.filter.draw;
 
+import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
@@ -11,46 +12,50 @@ public class Line implements Filter {
     private final float y1;
     private final float x2;
     private final float y2;
+    private final float[] value;
     private final float dx;
     private final float dy;
-    private final float slope;
-    private final float[] value;
+    private final int steps;
+    private final float xInc;
+    private final float yInc;
 
     public Line(float x1, float y1, float x2, float y2, float[] value) {
-        this.x1 = x1;
-        this.y1 = y1;
-        this.x2 = x2;
-        this.y2 = y2;
-        this.dx = x2 - x1;
-        this.dy = y2 - y1;
-        this.slope = dy / dx;
+        if (x1 > x2) {
+            this.x1 = x2;
+            this.y1 = y2;
+            this.x2 = x1;
+            this.y2 = y1;
+        }
+        else {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+        this.dx = this.x2 - this.x1;
+        this.dy = this.y2 - this.y1;
         this.value = value;
+        this.steps = (int) (Math.max(Math.abs(dx), Math.abs(dy)));
+        this.xInc = dx / (float) steps;
+        this.yInc = dy / (float) steps;
     }
 
     @Override
     public void apply(ImageData data, Random random) {
-        float x, y;
-        if (Math.abs(slope) < 1) {
-            x = x1;
-            y = y1;
-            while (x != x2) {
-                draw(data, x, y);
-                x++;
-                y += slope;
-            }
-        }
-        else if (Math.abs(slope) > 1) {
-            x = x1;
-            y = y1;
-            while (y != y2) {
-                draw(data, x, y);
-                y++;
-                x += 1.0f / slope;
-            }
+        float x = x1;
+        float y = y1;
+        for (int i = 0; i <= steps; i++) {
+            draw(data, x, y);
+            x += xInc;
+            y += yInc;
         }
     }
 
+    private boolean compareFloat(float a, float b) {
+        return a < b;
+    }
+
     private void draw(ImageData data, float x, float y) {
-        data.set(Math.round(x), Math.round(y), value);
+        data.draw(Math.round(x), Math.round(y), value);
     }
 }
