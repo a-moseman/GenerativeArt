@@ -128,7 +128,7 @@ public class ImageData {
      * @return the image.
      */
     public BufferedImage asImage() {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 ColorValue value = get(x, y);

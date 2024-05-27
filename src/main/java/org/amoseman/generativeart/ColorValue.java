@@ -1,5 +1,6 @@
 package org.amoseman.generativeart;
 
+import javax.swing.*;
 import java.awt.*;
 import java.nio.ByteBuffer;
 
@@ -9,6 +10,7 @@ public class ColorValue {
     private final float g;
     private final float b;
     private final float a;
+    private final int argb;
 
     private void validateRange(float... values) {
         for (float v : values) {
@@ -18,12 +20,25 @@ public class ColorValue {
         }
     }
 
+    private int getARGB(int a, int r, int g, int b) {
+        return  ((a & 0xFF) << 24) |
+                ((r & 0xFF) << 16) |
+                ((g & 0xFF) << 8) |
+                ((b & 0xFF) << 0);
+    }
+
     public ColorValue(float r, float g, float b, float a) {
         validateRange(r, g, b, a);
         this.r = r;
         this.g = g;
         this.b = b;
         this.a = a;
+        this.argb = getARGB(
+                (int) (a * 255 + 0.5),
+                (int) (r * 255 + 0.5),
+                (int) (g * 255 + 0.5),
+                (int) (b * 255 + 0.5)
+        );
     }
 
     public ColorValue(float r, float g, float b) {
@@ -32,40 +47,40 @@ public class ColorValue {
         this.g = g;
         this.b = b;
         this.a = DEFAULT_ALPHA;
+        this.argb = getARGB(
+                (int) (a * 255 + 0.5),
+                (int) (r * 255 + 0.5),
+                (int) (g * 255 + 0.5),
+                (int) (b * 255 + 0.5)
+        );
     }
 
-    public ColorValue(int argb) {
-        ByteBuffer buf = ByteBuffer.allocate(4);
-        buf.putInt(argb);
-        byte[] bytes = buf.array();
-        int a = bytes[0] - Byte.MIN_VALUE;
-        int r = bytes[1] - Byte.MIN_VALUE;
-        int g = bytes[2] - Byte.MIN_VALUE;
-        int b = bytes[3] - Byte.MIN_VALUE;
-        this.a = (float) a / 255;
-        this.r = (float) r / 255;
-        this.g = (float) g / 255;
-        this.b = (float) b / 255;
+    public ColorValue(Color color) {
+        float[] components = new float[3];
+        components = color.getRGBColorComponents(components);
+        this.a = 1f;
+        this.r = components[0];
+        this.g = components[1];
+        this.b = components[2];
+        this.argb = getARGB(
+                (int) (a * 255 + 0.5),
+                (int) (r * 255 + 0.5),
+                (int) (g * 255 + 0.5),
+                (int) (b * 255 + 0.5)
+        );
+
     }
 
     public Color toColor(){
+
         return new Color(r, g, b, a);
     }
 
     public int getARGB() {
-        int a = (int) (this.r * 255);
-        int r = (int) (this.g * 255);
-        int g = (int) (this.b * 255);
-        int b = (int) (this.a * 255);
-        byte[] bytes = new byte[4];
-        bytes[0] = (byte) (a + Byte.MIN_VALUE);
-        bytes[1] = (byte) (r + Byte.MIN_VALUE);
-        bytes[2] = (byte) (g + Byte.MIN_VALUE);
-        bytes[3] = (byte) (b + Byte.MIN_VALUE);
-        ByteBuffer buf = ByteBuffer.allocate(4);
-        buf.put(bytes);
-        buf.rewind();
-        return buf.getInt();
+        return  ((((int) (a * 255)) & 0xFF) << 24) |
+                ((((int) (r * 255)) & 0xFF) << 16) |
+                ((((int) (g * 255)) & 0xFF) << 8) |
+                ((((int) (b * 255)) & 0xFF) << 0);
     }
 
     public float distance(ColorValue other) {
