@@ -19,6 +19,29 @@ public class Line implements Filter {
     private final int steps;
     private final float xInc;
     private final float yInc;
+    private final int thickness;
+
+    public Line(float x1, float y1, float x2, float y2, ColorValue value, int thickness) {
+        if (x1 > x2) {
+            this.x1 = x2;
+            this.y1 = y2;
+            this.x2 = x1;
+            this.y2 = y1;
+        }
+        else {
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
+        }
+        this.dx = this.x2 - this.x1;
+        this.dy = this.y2 - this.y1;
+        this.value = value;
+        this.steps = (int) (Math.max(Math.abs(dx), Math.abs(dy)));
+        this.xInc = dx / (float) steps;
+        this.yInc = dy / (float) steps;
+        this.thickness = thickness;
+    }
 
     public Line(float x1, float y1, float x2, float y2, ColorValue value) {
         if (x1 > x2) {
@@ -39,6 +62,7 @@ public class Line implements Filter {
         this.steps = (int) (Math.max(Math.abs(dx), Math.abs(dy)));
         this.xInc = dx / (float) steps;
         this.yInc = dy / (float) steps;
+        this.thickness = 1;
     }
 
     @Override
@@ -46,9 +70,25 @@ public class Line implements Filter {
         float x = x1;
         float y = y1;
         for (int i = 0; i <= steps; i++) {
-            draw(data, x, y);
+            //draw(data, x, y);
+            thicknessRecursion(data, x, y, thickness);
             x += xInc;
             y += yInc;
+        }
+    }
+
+    private void thicknessRecursion(ImageData data, float x, float y, int depth) {
+        if (depth == 0) {
+            return;
+        }
+        draw(data, x, y);
+        for (float dx = -1; dx < 2; dx++) {
+            for (float dy = -1; dy < 2; dy++) {
+                if (0 == dx && 0 == dy) {
+                    continue;
+                }
+                thicknessRecursion(data, x + dx, y + dy, depth - 1);
+            }
         }
     }
 
