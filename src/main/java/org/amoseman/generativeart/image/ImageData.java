@@ -1,6 +1,5 @@
 package org.amoseman.generativeart.image;
 
-import org.amoseman.generativeart.ColorMath;
 import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 
@@ -129,12 +128,11 @@ public class ImageData {
      * @return the image.
      */
     public BufferedImage asImage() {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 ColorValue value = get(x, y);
-                image.setRGB(x, y, value.getRGB());
-
+                image.setRGB(x, y, value.getARGB());
             }
         }
         return image;
