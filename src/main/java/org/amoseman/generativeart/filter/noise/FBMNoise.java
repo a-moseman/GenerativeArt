@@ -1,6 +1,5 @@
 package org.amoseman.generativeart.filter.noise;
 
-import org.amoseman.generativeart.ColorMath;
 import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;

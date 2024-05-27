@@ -23,7 +23,7 @@ public class Average implements Filter {
             ColorValue a = data.get(i);
             ColorValue b = secondary.get(i);
             ColorValue c = new ColorValue(
-                    a.getRGB() * ratio + b.getRed() * (1 - ratio),
+                    a.getARGB() * ratio + b.getRed() * (1 - ratio),
                     a.getGreen() * ratio + b.getGreen() * (1 - ratio),
                     a.getBlue() * ratio + b.getBlue() * (1 - ratio),
                     a.getAlpha() * ratio + b.getAlpha() * (1 - ratio)

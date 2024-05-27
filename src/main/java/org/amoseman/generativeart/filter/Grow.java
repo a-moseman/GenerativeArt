@@ -1,10 +1,8 @@
 package org.amoseman.generativeart.filter;
 
-import org.amoseman.generativeart.ColorMath;
 import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.security.SecureRandom;
 import java.util.Random;
 
 public class Grow implements Filter {

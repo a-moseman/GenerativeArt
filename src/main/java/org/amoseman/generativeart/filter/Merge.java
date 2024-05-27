@@ -1,6 +1,5 @@
 package org.amoseman.generativeart.filter;
 
-import org.amoseman.generativeart.ColorMath;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
