@@ -1,12 +1,8 @@
 package org.amoseman.generativeart;
 
-import org.amoseman.generativeart.filter.*;
-import org.amoseman.generativeart.filter.Composite;
-import org.amoseman.generativeart.filter.draw.Rectangle;
+import org.amoseman.generativeart.filter.blur.BoxBlur;
 import org.amoseman.generativeart.filter.draw.Text;
-import org.amoseman.generativeart.filter.noise.FBMNoise;
 import org.amoseman.generativeart.filter.noise.Noise;
-import org.amoseman.generativeart.image.ImageData;
 import org.amoseman.generativeart.piece.Piece;
 
 import java.awt.*;
@@ -29,7 +25,7 @@ public class Main {
         Piece piece = new Piece(width, height, seed);
         piece
                 .addFilter(new Noise())
-                .addFilter(new Blur());
+                .addFilter(new BoxBlur(9));
 
         LocalDateTime now = LocalDateTime.now();
         String signature = String.format(SIGNATURE_FORMAT, AUTHOR, now.format(DateTimeFormatter.ISO_LOCAL_DATE));

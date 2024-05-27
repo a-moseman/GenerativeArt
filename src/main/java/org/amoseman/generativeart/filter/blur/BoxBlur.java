@@ -1,19 +1,35 @@
-package org.amoseman.generativeart.filter;
+package org.amoseman.generativeart.filter.blur;
 
 import org.amoseman.generativeart.ColorValue;
+import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
 
-public class Blur implements Filter {
+public class BoxBlur implements Filter {
+    private final int kernel;
+
+    public BoxBlur(int kernel) {
+        if (kernel <= 1) {
+            throw new RuntimeException("Box blur kernel must be greater than 0");
+        }
+        if (kernel % 2 == 0) {
+            throw new RuntimeException("Box blur kernel must be an odd value");
+        }
+        this.kernel = kernel;
+    }
+
     @Override
     public void apply(ImageData data, Random random) {
+        int min = -kernel / 2;
+        int max = kernel / 2;
+
         for (int x = 0; x < data.getWidth(); x++) {
             for (int y = 0; y < data.getHeight(); y++) {
                 float[] value = new float[4];
                 int t = 0;
-                for (int dx = -1; dx < 2; dx++) {
-                    for (int dy = -1; dy < 2; dy++) {
+                for (int dx = min; dx <= max; dx++) {
+                    for (int dy = min; dy <= max; dy++) {
                         int x2 = x + dx;
                         int y2 = y + dy;
                         if (x2 < 0 || x2 >= data.getWidth() || y2 < 0 || y2 >= data.getHeight()) {
