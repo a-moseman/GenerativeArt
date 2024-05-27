@@ -35,9 +35,18 @@ public class Rectangle implements Filter {
             for (float dx = x; dx < w + x; dx++) {
                 for (float dy = y; dy < h + y; dy++) {
                     Vector point = VectorMath.rotate(new Vector(dx, dy), center, rotation);
-                    int px = (int) point.x;
-                    int py = (int) point.y;
-                    data.set(px, py, color);
+
+                    // dumb solution to avoiding holes when rotated
+                    for (float i = 0; i < 0.8f; i += 0.2f) {
+                        for (float j = 0; j < 0.8f; j += 0.2f) {
+                            int px = (int) Math.round(point.x + i);
+                            int py = (int) Math.round(point.y + j);
+                            data.set(px, py, color);
+                        }
+                    }
+                    //int px = (int) point.x;
+                    //int py = (int) point.y;
+                    //data.set(px, py, color);
                 }
             }
             return;
