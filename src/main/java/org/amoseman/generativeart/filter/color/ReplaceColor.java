@@ -1,4 +1,4 @@
-package org.amoseman.generativeart.filter.replace;
+package org.amoseman.generativeart.filter.color;
 
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ColorValue;
