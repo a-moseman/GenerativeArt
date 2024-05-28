@@ -34,8 +34,7 @@ public class Main {
                         .addColor(analogous[0], 0.33)
                         .addColor(analogous[1], 0.33)
                 )
-                .addFilter(new Rescale(8))
-                .addFilter(new Grow((int) (width * height)));
+                .addFilter(new Grow(512_000_000));
 
 
         LocalDateTime now = LocalDateTime.now();

@@ -40,7 +40,7 @@ public class GaussianBlur implements Filter {
         ColorValue[] blurred = new ColorValue[data.getSize()];
         // avoid null values
         for (int i = 0; i < data.getSize(); i++) {
-            blurred[i] = ColorValue.RED;
+            blurred[i] = data.get(i);
         }
 
         for (int x = radius; x < data.getWidth() - radius; x++) {
