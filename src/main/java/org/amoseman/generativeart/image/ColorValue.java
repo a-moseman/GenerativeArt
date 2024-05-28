@@ -1,8 +1,6 @@
-package org.amoseman.generativeart;
+package org.amoseman.generativeart.image;
 
-import javax.swing.*;
 import java.awt.*;
-import java.nio.ByteBuffer;
 
 public class ColorValue {
     private static final float DEFAULT_ALPHA = 1f;
@@ -15,7 +13,7 @@ public class ColorValue {
     private void validateRange(float... values) {
         for (float v : values) {
             if (v < 0 || v > 1) {
-                throw new RuntimeException("Color value outside range [0, 1]");
+                throw new RuntimeException(String.format("Color value of %.2f outside range [0, 1]", v));
             }
         }
     }
@@ -28,7 +26,7 @@ public class ColorValue {
     }
 
     public ColorValue(float r, float g, float b, float a) {
-        validateRange(r, g, b, a);
+        //validateRange(r, g, b, a);
         this.r = r;
         this.g = g;
         this.b = b;
@@ -42,7 +40,7 @@ public class ColorValue {
     }
 
     public ColorValue(float r, float g, float b) {
-        validateRange(r, g, b);
+        //validateRange(r, g, b);
         this.r = r;
         this.g = g;
         this.b = b;
@@ -58,6 +56,7 @@ public class ColorValue {
     public ColorValue(Color color) {
         float[] components = new float[3];
         components = color.getRGBColorComponents(components);
+        //validateRange(components);
         this.a = 1f;
         this.r = components[0];
         this.g = components[1];
@@ -72,8 +71,12 @@ public class ColorValue {
     }
 
     public Color toColor(){
-
-        return new Color(r, g, b, a);
+        return new Color(
+                Math.max(Math.min(r, 1), 0),
+                Math.max(Math.min(g, 1), 0),
+                Math.max(Math.min(b, 1), 0),
+                Math.max(Math.min(a, 1), 0)
+        );
     }
 
     public int getARGB() {
@@ -105,6 +108,19 @@ public class ColorValue {
         g2 = other.g * other.a / a + g * a * (1f - other.a) / a;
         b2 = other.b * other.a / a + b * a * (1f - other.a) / a;
         return new ColorValue(r2, g2, b2, a2);
+    }
+
+    public ColorValue sum(ColorValue other) {
+        return new ColorValue(r + other.r, g + other.g, b + other.b, a + other.a);
+    }
+
+    public ColorValue scale(double scalar) {
+        return new ColorValue(
+                (float) (r * scalar),
+                (float) (g * scalar),
+                (float) (b * scalar),
+                (float) (a * scalar)
+        );
     }
 
     public static ColorValue lerp(ColorValue a, ColorValue b, float t) {

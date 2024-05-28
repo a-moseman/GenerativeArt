@@ -1,8 +1,7 @@
 package org.amoseman.generativeart.filter.draw;
 
-import org.amoseman.generativeart.ColorValue;
+import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
-import org.amoseman.generativeart.filter.Grow;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.awt.*;

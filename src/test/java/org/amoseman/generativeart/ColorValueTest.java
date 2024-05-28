@@ -1,5 +1,6 @@
 package org.amoseman.generativeart;
 
+import org.amoseman.generativeart.image.ColorValue;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;

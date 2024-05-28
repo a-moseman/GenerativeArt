@@ -1,6 +1,6 @@
 package org.amoseman.generativeart.filter.blur;
 
-import org.amoseman.generativeart.ColorValue;
+import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 

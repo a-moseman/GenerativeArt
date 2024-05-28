@@ -1,10 +1,8 @@
 package org.amoseman.generativeart.filter;
 
-import org.amoseman.generativeart.ColorValue;
+import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Rescale implements Filter {
