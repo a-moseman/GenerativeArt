@@ -4,21 +4,34 @@ import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class Noise implements Filter {
-    private final ColorValue[] palette;
-
-    public Noise(ColorValue... palette) {
-        this.palette = palette;
-    }
+    private final List<ProbableColorValue> palette;
 
     public Noise() {
-        this.palette = null;
+        this.palette = new ArrayList<>();
+    }
+
+    public Noise addColor(ColorValue color, double probability) {
+        palette.add(new ProbableColorValue(color, probability));
+        return this;
     }
 
     @Override
     public void apply(ImageData data, Random random) {
+        Collections.sort(palette);
+        double sum = 0;
+        for (ProbableColorValue pcv : palette) {
+            sum += pcv.probability;
+        }
+        if (sum < 1 || sum > 1) {
+            throw new RuntimeException("Probabilities must add up to 1");
+        }
+
         for (int i = 0; i < data.getSize(); i++) {
             ColorValue a = data.get(i);
             ColorValue b = randomColor(random);
@@ -28,7 +41,7 @@ public class Noise implements Filter {
     }
 
     private ColorValue randomColor(Random random) {
-        if (null == palette || 0 == palette.length) {
+        if (palette.isEmpty()) {
             return new ColorValue(
                     random.nextFloat(),
                     random.nextFloat(),
@@ -36,6 +49,17 @@ public class Noise implements Filter {
                     1
             );
         }
-        return palette[random.nextInt(palette.length)];
+        double roll = random.nextDouble();
+        double shift = 0;
+        int index = 0;
+        while (index < palette.size()) {
+            ProbableColorValue pcv = palette.get(index);
+            if (roll < pcv.probability + shift) {
+                return pcv.color;
+            }
+            shift += pcv.probability;
+            index++;
+        }
+        throw new RuntimeException("Invalid pallet");
     }
 }

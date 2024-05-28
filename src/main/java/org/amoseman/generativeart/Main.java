@@ -28,34 +28,11 @@ public class Main {
         Random random = new Random(seed);
 
         Piece piece = new Piece((int) width, (int) height, seed);
-        piece
-                .addFilter(new Noise(
-                        ColorValue.BLUE,
-                        ColorValue.WHITE
-                ))
-                .addFilter(new BoxBlur(3))
-                .addFilter(new Degranulate(4));
-
-        for (int i = 0; i < 80; i++) {
-            piece.addFilter(new Rescale(2));
-            piece.addFilter(new Grow(1_000_000));
-        }
-        piece.addFilter(new Scrambulation(8, 0.015, Direction.HORIZONTAL));
-
-        for (int i = 1; i < 13; i++) {
-            float s = 64f / i;
-            float y = height / i - s * 3;
-            piece.addFilter(new Rectangle(0, y, width, s, 0, new ColorValue(.804f, .902f, 1f), true));
-        }
-
-        piece.addFilter(new GaussianBlur(3));
-
-        piece.addFilter(new Ellipse(width / 2, height / 2, 320, 320, new ColorValue(.804f, .902f, 1f), 100, true));
-        piece.addFilter(new Ellipse(width / 2, height / 2, 320 - 8, 320 - 8, new ColorValue(0, .4f, .804f), 100, true));
-        for (int i = 1; i < 7; i++) {
-            piece.addFilter(new Ellipse(width / 2, height / 2, 320, 320 - (i * (320 / 7)), new ColorValue(.804f, .902f, 1f), 100, false, 3));
-            piece.addFilter(new Ellipse(width / 2, height / 2, 320 - (i * (320 / 7)), 320, new ColorValue(.804f, .902f, 1f), 100, false, 3));
-        }
+        piece.addFilter(new Noise()
+                .addColor(ColorValue.RED, 0.33)
+                .addColor(ColorValue.GREEN, 0.33)
+                .addColor(ColorValue.BLUE, 0.34)
+        );
 
         LocalDateTime now = LocalDateTime.now();
         String signature = String.format(SIGNATURE_FORMAT, AUTHOR, now.format(DateTimeFormatter.ISO_LOCAL_DATE));
