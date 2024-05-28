@@ -18,7 +18,7 @@ public class Piece {
     public Piece(int width, int height, long seed) {
         this.data = new ImageData(width, height);
         this.seed = seed;
-        this.random = RandomGenerator.of("L64X256MixRandom");
+        this.random = new Random();
     }
 
     public Piece(int width, int height) {
