@@ -14,6 +14,18 @@ public class Ellipse implements Filter {
     private final ColorValue value;
     private final int precision;
     private final boolean fill;
+    private final int thickness;
+
+    public Ellipse(float x, float y, float a, float b, ColorValue value, int precision, boolean fill, int thickness) {
+        this.x = x;
+        this.y = y;
+        this.a = a;
+        this.b = b;
+        this.value = value;
+        this.precision = precision;
+        this.fill = fill;
+        this.thickness = thickness;
+    }
 
     public Ellipse(float x, float y, float a, float b, ColorValue value, int precision, boolean fill) {
         this.x = x;
@@ -23,6 +35,7 @@ public class Ellipse implements Filter {
         this.value = value;
         this.precision = precision;
         this.fill = fill;
+        this.thickness = 1;
     }
 
     @Override
@@ -47,7 +60,7 @@ public class Ellipse implements Filter {
                 float theta2 = (float) ((Math.PI * 2) * (nextStep / precision));
                 float x2 = (float) (a * Math.cos(theta2)) + x;
                 float y2 = (float) (b * Math.sin(theta2)) + y;
-                new Line(x1, y1, x2, y2 , value).apply(data, random);
+                new Line(x1, y1, x2, y2 , value, thickness).apply(data, random);
             }
         }
     }
