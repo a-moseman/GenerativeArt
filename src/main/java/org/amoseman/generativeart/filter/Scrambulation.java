@@ -23,12 +23,12 @@ public class Scrambulation implements Filter {
         switch (direction) {
             case HORIZONTAL:
                 for (int y = 0; y < data.getHeight(); y += sections) {
-                    double r = random.nextDouble();
+                    double r = random.nextDouble() - 0.5;
                     r *= strength;
                     int offset = (int) (data.getWidth() * r);
                     for (int dy = 0; dy < sections && y + dy < data.getHeight(); dy++) {
                         for (int x = 0; x < data.getWidth(); x++) {
-                            int x2 = (x + offset) % data.getWidth();
+                            int x2 = wrap(x + offset, data.getWidth());
                             out[x2 + (y + dy) * data.getWidth()] = data.get(x, y + dy);
                         }
                     }
@@ -36,12 +36,12 @@ public class Scrambulation implements Filter {
                 break;
             case VERTICAL:
                 for (int x = 0; x < data.getHeight(); x += sections) {
-                    double r = random.nextDouble();
+                    double r = random.nextDouble() - 0.5;
                     r *= strength;
                     int offset = (int) (data.getHeight() * r);
                     for (int dx = 0; dx < sections && x + dx < data.getWidth(); dx++) {
                         for (int y = 0; y < data.getHeight(); y++) {
-                            int y2 = (y + offset) % data.getHeight();
+                            int y2 = wrap(y + offset, data.getHeight());
                             out[(x + dx) + y2 * data.getWidth()] = data.get(x + dx, y);
                         }
                     }
@@ -54,6 +54,12 @@ public class Scrambulation implements Filter {
     }
 
     private int wrap(int x, int max) {
-        return x % max;
+        if (x >= max) {
+            return x - max;
+        }
+        if (x < 0) {
+            return max + x;
+        }
+        return x;
     }
 }
