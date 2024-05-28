@@ -3,7 +3,7 @@ package org.amoseman.generativeart.filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Scrambulation implements Filter {
     private final int sections;
@@ -18,7 +18,7 @@ public class Scrambulation implements Filter {
 
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         ColorValue[] out = new ColorValue[data.getSize()];
         switch (direction) {
             case HORIZONTAL:

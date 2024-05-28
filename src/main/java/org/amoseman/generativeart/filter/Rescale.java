@@ -3,7 +3,7 @@ package org.amoseman.generativeart.filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Rescale implements Filter {
     private final int scale;
@@ -13,7 +13,7 @@ public class Rescale implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         ColorValue[] scaled = new ColorValue[data.getSize()];
         for (int x = 0; x < data.getWidth(); x += scale) {
             for (int y = 0; y < data.getHeight(); y += scale) {

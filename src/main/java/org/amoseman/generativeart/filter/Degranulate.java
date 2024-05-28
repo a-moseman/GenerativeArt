@@ -3,7 +3,7 @@ package org.amoseman.generativeart.filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Degranulate implements Filter {
     private int granularity;
@@ -13,7 +13,7 @@ public class Degranulate implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         int g = granularity - 1;
         for (int i = 0; i < data.getSize(); i++) {
             ColorValue current = data.get(i);

@@ -7,7 +7,7 @@ import org.spongepowered.noise.LatticeOrientation;
 import org.spongepowered.noise.Noise;
 import org.spongepowered.noise.NoiseQualitySimplex;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class FBMNoise implements Filter {
     private final ColorValue a;
@@ -31,7 +31,7 @@ public class FBMNoise implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         double[][] heightMap = new double[data.getWidth()][data.getHeight()];
 
         double freq = frequency;

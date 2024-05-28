@@ -4,7 +4,7 @@ import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class GaussianBlur implements Filter {
     private final int radius;
@@ -36,7 +36,7 @@ public class GaussianBlur implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         ColorValue[] blurred = new ColorValue[data.getSize()];
         // avoid null values
         for (int i = 0; i < data.getSize(); i++) {

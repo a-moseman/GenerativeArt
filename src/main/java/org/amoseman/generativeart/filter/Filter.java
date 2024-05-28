@@ -2,8 +2,8 @@ package org.amoseman.generativeart.filter;
 
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public interface Filter {
-    void apply(ImageData data, Random random);
+    void apply(ImageData data, RandomGenerator random);
 }

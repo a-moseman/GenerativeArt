@@ -2,7 +2,7 @@ package org.amoseman.generativeart.filter;
 
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Merge implements Filter {
     private final ImageData foreground;
@@ -12,7 +12,7 @@ public class Merge implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         if (data.getSize() != foreground.getSize() || data.getWidth() != foreground.getWidth() || data.getHeight() != foreground.getHeight()) {
             throw new RuntimeException("Data must be of the same size and shape");
         }

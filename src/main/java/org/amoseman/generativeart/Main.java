@@ -25,8 +25,6 @@ public class Main {
         float width = 1920;
         float height = 1080;
         long seed = parseSeed(args).orElseGet(System::currentTimeMillis);
-        Random random = new Random(seed);
-
         Piece piece = new Piece((int) width, (int) height, seed);
         piece.addFilter(new Noise()
                 .addColor(ColorValue.RED, 0.33)

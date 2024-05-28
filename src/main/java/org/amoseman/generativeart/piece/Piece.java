@@ -8,16 +8,17 @@ import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Piece {
     private ImageData data;
     private long seed;
-    private Random random;
+    private RandomGenerator random;
 
     public Piece(int width, int height, long seed) {
         this.data = new ImageData(width, height);
         this.seed = seed;
-        this.random = new Random(seed);
+        this.random = RandomGenerator.of("L64X256MixRandom");
     }
 
     public Piece(int width, int height) {
@@ -50,5 +51,9 @@ public class Piece {
 
     public ImageData getData() {
         return data;
+    }
+
+    public RandomGenerator getRandom() {
+        return random;
     }
 }

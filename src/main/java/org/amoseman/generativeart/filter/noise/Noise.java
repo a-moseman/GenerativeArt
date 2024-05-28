@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Noise implements Filter {
     private final List<ProbableColorValue> palette;
@@ -22,7 +23,7 @@ public class Noise implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         Collections.sort(palette);
         double sum = 0;
         for (ProbableColorValue pcv : palette) {
@@ -40,7 +41,7 @@ public class Noise implements Filter {
         }
     }
 
-    private ColorValue randomColor(Random random) {
+    private ColorValue randomColor(RandomGenerator random) {
         if (palette.isEmpty()) {
             return new ColorValue(
                     random.nextFloat(),

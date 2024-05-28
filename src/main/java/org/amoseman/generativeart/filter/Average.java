@@ -3,7 +3,7 @@ package org.amoseman.generativeart.filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Average implements Filter {
     private ImageData secondary;
@@ -15,7 +15,7 @@ public class Average implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         if (data.getSize() != secondary.getSize()) {
             throw new RuntimeException("Images must be same size");
         }

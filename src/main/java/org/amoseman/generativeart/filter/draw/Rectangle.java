@@ -5,7 +5,7 @@ import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 import org.amoseman.generativeart.vector.Vector;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Rectangle implements Filter {
     private final float x;
@@ -43,7 +43,7 @@ public class Rectangle implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         if (fill) {
             for (float dx = x; dx < w + x; dx++) {
                 for (float dy = y; dy < h + y; dy++) {

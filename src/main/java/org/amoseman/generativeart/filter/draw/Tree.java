@@ -5,6 +5,7 @@ import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Tree implements Filter {
     private final ColorValue value;
@@ -42,11 +43,11 @@ public class Tree implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         step(data, random, x0, y0, maxDepth, branches, branchSurvivalProbability, angle, angleDeviation, branchLength, branchLengthDeviation);
     }
 
-    private void step(ImageData data, Random random, float x, float y, int depth, float branches, float branchSurvivalProbability, float angle, float angleDeviation, float branchLength, float branchLengthDeviation) {
+    private void step(ImageData data, RandomGenerator random, float x, float y, int depth, float branches, float branchSurvivalProbability, float angle, float angleDeviation, float branchLength, float branchLengthDeviation) {
         int b = (int) branches;
         if (depth == 0 || b == 0 || branchSurvivalProbability < random.nextFloat()) {
             return;

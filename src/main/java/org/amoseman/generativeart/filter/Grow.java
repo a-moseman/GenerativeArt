@@ -5,6 +5,7 @@ import org.amoseman.generativeart.image.ImageData;
 import org.amoseman.generativeart.vector.Vector;
 
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Grow implements Filter {
     private final int n;
@@ -24,7 +25,7 @@ public class Grow implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         int i = 0;
         while (i < n) {
             int x = random.nextInt(data.getWidth());
@@ -47,7 +48,7 @@ public class Grow implements Filter {
         }
     }
 
-    private Vector randomGrowthPosition(ImageData data, Random random, Vector origin) {
+    private Vector randomGrowthPosition(ImageData data, RandomGenerator random, Vector origin) {
         Vector growth;
         do {
             growth = origin.add(randomShift(random));
@@ -55,7 +56,7 @@ public class Grow implements Filter {
         return growth;
     }
 
-    private Vector randomShift(Random random) {
+    private Vector randomShift(RandomGenerator random) {
         return switch (random.nextInt(4)) {
             case 0 -> Vector.UP;
             case 1 -> Vector.DOWN;

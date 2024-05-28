@@ -3,7 +3,7 @@ package org.amoseman.generativeart.filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Composite implements Filter {
     private final ImageData other;
@@ -23,7 +23,7 @@ public class Composite implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         if (data.getSize() != other.getSize() || data.getWidth() != other.getWidth() || data.getHeight() != other.getHeight()) {
             throw new RuntimeException("Data must be of the same size and shape");
         }

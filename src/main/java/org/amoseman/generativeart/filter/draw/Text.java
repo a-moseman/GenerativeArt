@@ -6,7 +6,7 @@ import org.amoseman.generativeart.image.ImageData;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Text implements Filter {
     private final float x;
@@ -24,7 +24,7 @@ public class Text implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         BufferedImage image = data.asImage();
         Graphics graphics = image.getGraphics();
         graphics.setFont(font);

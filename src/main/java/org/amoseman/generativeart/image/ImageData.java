@@ -5,6 +5,7 @@ import org.amoseman.generativeart.filter.Filter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import java.util.random.RandomGenerator;
 
 /**
  * Represents the color data of an image.
@@ -64,11 +65,11 @@ public class ImageData {
         }
     }
 
-    public void filter(Random random, Filter filter) {
+    public void filter(RandomGenerator random, Filter filter) {
         filter.apply(this, random);
     }
 
-    public void filter(Random random, int cycles, Filter... filters) {
+    public void filter(RandomGenerator random, int cycles, Filter... filters) {
         for (int i = 0; i < cycles; i++) {
             for (Filter filter : filters) {
                 filter(random, filter);

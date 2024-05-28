@@ -4,7 +4,7 @@ import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 //Bresenham
 //https://medium.com/geekculture/bresenhams-line-drawing-algorithm-2e0e953901b3
@@ -66,7 +66,7 @@ public class Line implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         float x = x1;
         float y = y1;
         for (int i = 0; i <= steps; i++) {

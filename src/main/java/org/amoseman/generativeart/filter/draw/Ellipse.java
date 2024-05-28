@@ -4,7 +4,7 @@ import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class Ellipse implements Filter {
     private final float x;
@@ -39,7 +39,7 @@ public class Ellipse implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         if (fill) {
             for (int x = 0; x < data.getWidth(); x++) {
                 for (int y = 0; y < data.getHeight(); y++) {

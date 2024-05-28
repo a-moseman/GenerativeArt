@@ -4,7 +4,7 @@ import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ImageData;
 
-import java.util.Random;
+import java.util.random.RandomGenerator;
 
 public class BoxBlur implements Filter {
     private final int kernel;
@@ -20,7 +20,7 @@ public class BoxBlur implements Filter {
     }
 
     @Override
-    public void apply(ImageData data, Random random) {
+    public void apply(ImageData data, RandomGenerator random) {
         int min = -kernel / 2;
         int max = kernel / 2;
 
