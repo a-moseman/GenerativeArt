@@ -27,7 +27,7 @@ public class ImageData {
         this.size = width * height;
         this.pixels = new ColorValue[size];
         for (int i = 0; i < size; i++) {
-            pixels[i] = ColorValue.BLACK;
+            pixels[i] = ColorValue.TRANSPARENT;
         }
     }
 

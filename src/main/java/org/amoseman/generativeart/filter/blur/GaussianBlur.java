@@ -49,7 +49,8 @@ public class GaussianBlur implements Filter {
                 for (int dx = -radius; dx <= radius; dx++) {
                     for (int dy = -radius; dy <= radius; dy++) {
                         double kernelValue = kernel[dx + radius][dy + radius];
-                        value = value.sum(data.get(x - dx, y - dy).scale(kernelValue));
+                        ColorValue v = data.get(x - dx, y - dy);
+                        value = value.sum(v.scale(kernelValue - v.getAlpha()));
                     }
                 }
                 blurred[x + y * data.getWidth()] = value;

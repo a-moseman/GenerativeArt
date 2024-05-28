@@ -52,7 +52,7 @@ public class Text implements Filter {
             for (int y = 0; y < data.getHeight(); y++) {
                 Color c = new Color(image.getRGB(x, y));
                 float[] v = new float[4];
-                v = c.getColorComponents(v);
+                v = c.getRGBComponents(v);
                 data.set(x, y, new ColorValue(v[0], v[1], v[2], v[3]));
             }
         }

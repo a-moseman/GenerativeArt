@@ -34,10 +34,8 @@ public class Noise implements Filter {
         }
 
         for (int i = 0; i < data.getSize(); i++) {
-            ColorValue a = data.get(i);
             ColorValue b = randomColor(random);
-            ColorValue c = a.add(b);
-            data.set(i, c);
+            data.set(i, b);
         }
     }
 
