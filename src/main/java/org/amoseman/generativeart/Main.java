@@ -1,20 +1,19 @@
 package org.amoseman.generativeart;
 
 import org.amoseman.generativeart.filter.*;
-import org.amoseman.generativeart.filter.blur.BoxBlur;
+import org.amoseman.generativeart.filter.Composite;
 import org.amoseman.generativeart.filter.blur.GaussianBlur;
-import org.amoseman.generativeart.filter.draw.Ellipse;
 import org.amoseman.generativeart.filter.draw.Rectangle;
 import org.amoseman.generativeart.filter.draw.Text;
 import org.amoseman.generativeart.filter.noise.Noise;
 import org.amoseman.generativeart.image.ColorValue;
+import org.amoseman.generativeart.image.ImageData;
 import org.amoseman.generativeart.piece.Piece;
 
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Random;
 
 public class Main {
 
@@ -32,9 +31,13 @@ public class Main {
                 .addFilter(new Noise()
                         .addColor(root, 0.34)
                         .addColor(analogous[0], 0.33)
-                        .addColor(analogous[1], 0.33)
-                )
-                .addFilter(new Grow(512_000_000));
+                        .addColor(analogous[1], 0.33))
+                .addFilter(new Grow(512_000_000))
+                .addFilter(new Rectangle(width / 2 - 800 / 2, height / 2 - 400 / 2, 800, 400, 0, root.monochromaticColor(), true))
+                .addFilter(new Text(width / 2, height / 2, "208 47 199", root, new Font("Monospaced", Font.ITALIC, 128), true))
+                .addFilter(new Scrambulation(2, 0.005, Direction.HORIZONTAL))
+                .addFilter(new GaussianBlur(3))
+                .addFilter(new Rectangle(width / 2 - 800 / 2, height / 2 - 400 / 2, 800, 400, 0, root.monochromaticColor(), false, 6));
 
 
         LocalDateTime now = LocalDateTime.now();

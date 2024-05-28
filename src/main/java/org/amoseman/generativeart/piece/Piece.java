@@ -9,22 +9,28 @@ import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 
 public class Piece {
     private ImageData data;
     private long seed;
     private RandomGenerator random;
+    private static final String RANDOM_ALGORITHM = "Xoshiro256PlusPlus";
+
+    private static RandomGenerator buildRandom(long seed) {
+        return RandomGeneratorFactory.of(RANDOM_ALGORITHM).create(seed);
+    }
 
     public Piece(int width, int height, long seed) {
         this.data = new ImageData(width, height);
         this.seed = seed;
-        this.random = new Random();
+        this.random = buildRandom(seed);
     }
 
     public Piece(int width, int height) {
         this.data = new ImageData(width, height);
         this.seed = new SecureRandom().nextLong();
-        this.random = new Random(this.seed);
+        this.random = buildRandom(seed);
     }
 
     public Piece addFilter(Filter filter) {
