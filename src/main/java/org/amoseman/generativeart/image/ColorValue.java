@@ -114,6 +114,10 @@ public class ColorValue {
         return new ColorValue(r + other.r, g + other.g, b + other.b, a + other.a);
     }
 
+    public ColorValue difference(ColorValue other) {
+        return new ColorValue(r - other.r, g - other.g, b - other.b, a - other.a);
+    }
+
     public ColorValue scale(double scalar) {
         return new ColorValue(
                 (float) (r * scalar),
@@ -149,6 +153,119 @@ public class ColorValue {
 
     public float getAlpha() {
         return a;
+    }
+
+    public ColorValue complementaryColor() {
+        return new ColorValue(
+                1f - r,
+                1f - g,
+                1f - b,
+                a
+        );
+    }
+
+    public ColorValue monochromaticColor() {
+        double blackDistance = distance(ColorValue.BLACK);
+        double whiteDistance = distance(ColorValue.WHITE);
+        if (blackDistance == whiteDistance) {
+            return this;
+        }
+        else if (blackDistance < whiteDistance) {
+            return this.sum(ColorValue.BLACK).scale(0.5);
+        }
+        else {
+            return this.sum(ColorValue.WHITE).scale(0.5);
+        }
+    }
+
+    private double[] toHSL() {
+        double min = Math.min(r, Math.min(g, b));
+        double max = Math.max(r, Math.max(g, b));
+        double luminance = (max + min) / 2;
+        double saturation;
+        if (luminance <= 0.5) {
+            saturation = (max - min) / (max + min);
+        }
+        else {
+            saturation = (max - min) / (2.0 - max - min);
+        }
+        double hue;
+        if (max == r) {
+            hue = (g - b) / (max - min);
+        }
+        else if (max == g) {
+            hue = 2.0 + (b - r) / (max - min);
+        }
+        else if (max == b) {
+            hue = 4.0 + (r - g) / (max - min);
+        }
+        else {
+            throw new RuntimeException("Issue with identifying max color channel");
+        }
+        hue *= 60;
+        if (hue < 0) {
+            hue += 360;
+        }
+        return new double[]{luminance, saturation, hue};
+    }
+
+    public static ColorValue fromHSL(double[] hsl) {
+        double temp1;
+        if (hsl[0] < 0.5) {
+            temp1 = hsl[0] * (1.0 + hsl[1]);
+        }
+        else {
+            temp1 = hsl[0] + hsl[1] - hsl[0] * hsl[1];
+        }
+        double temp2 = 2.0 * hsl[0] - temp1;
+        double hue = hsl[2] / 360;
+
+        double tempR = hue + 0.333;
+        if (tempR > 1) {
+            tempR -= 1;
+        }
+        if (tempR < 0) {
+            tempR += 1;
+        }
+        double tempG = hue;
+        if (tempG > 1) {
+            tempG -= 1;
+        }
+        if (tempG < 0) {
+            tempG += 1;
+        }
+        double tempB = hue - 0.333;
+        if (tempB > 1) {
+            tempB -= 1;
+        }
+        if (tempB < 0) {
+            tempB += 1;
+        }
+        double r = convertHSLColorChannel(tempR, temp1, temp2);
+        double g = convertHSLColorChannel(tempG, temp1, temp2);
+        double b = convertHSLColorChannel(tempB, temp1, temp2);
+        return new ColorValue((float) r, (float) g, (float) b, 1);
+    }
+
+    private static double convertHSLColorChannel(double tempV, double temp1, double temp2) {
+        if (6.0 * tempV < 1) {
+            return temp2 + (temp1 - temp2) * 6 * tempV;
+        }
+        if (2 * tempV < 1) {
+            return temp1;
+        }
+        if (3 * tempV < 2) {
+            return temp2 + (temp1 - temp2) * (0.666 - tempV) * 6;
+        }
+        return temp2;
+    }
+
+    public ColorValue[] analogousColors() {
+        double[] hsl = toHSL();
+        double hue = hsl[2];
+        double[] right = new double[]{hsl[0], hsl[1], (hue + 30) % 360};
+        double[] left = new double[]{hsl[0], hsl[1], hue - 30 < 0 ? 360 + (hue - 30) : hue - 30};
+        return new ColorValue[]{ColorValue.fromHSL(right), ColorValue.fromHSL(left)};
     }
 
     public static ColorValue RED = new ColorValue(1, 0, 0);

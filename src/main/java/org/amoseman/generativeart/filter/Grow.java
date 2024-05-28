@@ -11,6 +11,7 @@ public class Grow implements Filter {
     private final int n;
     private final double ignoreThreshold;
     private final ColorValue[] ignore;
+    private final Vector[] directions = new Vector[]{Vector.UP, Vector.DOWN, Vector.LEFT, Vector.RIGHT};
 
     public Grow(int n, double ignoreThreshold, ColorValue... ignore) {
         this.n = n;
@@ -49,20 +50,6 @@ public class Grow implements Filter {
     }
 
     private Vector randomGrowthPosition(ImageData data, RandomGenerator random, Vector origin) {
-        Vector growth;
-        do {
-            growth = origin.add(randomShift(random));
-        } while (growth.x < 0 || growth.x >= data.getWidth() || growth.y < 0 || growth.y >= data.getHeight());
-        return growth;
-    }
-
-    private Vector randomShift(RandomGenerator random) {
-        return switch (random.nextInt(4)) {
-            case 0 -> Vector.UP;
-            case 1 -> Vector.DOWN;
-            case 2 -> Vector.RIGHT;
-            case 3 -> Vector.LEFT;
-            default -> throw new IllegalStateException("Unexpected value: " + random.nextInt(4));
-        };
+        return origin.add(directions[random.nextInt(4)]);
     }
 }

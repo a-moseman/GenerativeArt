@@ -26,15 +26,21 @@ public class Main {
         float height = 1080;
         long seed = parseSeed(args).orElseGet(System::currentTimeMillis);
         Piece piece = new Piece((int) width, (int) height, seed);
-        piece.addFilter(new Noise()
-                .addColor(ColorValue.RED, 0.33)
-                .addColor(ColorValue.GREEN, 0.33)
-                .addColor(ColorValue.BLUE, 0.34)
-        );
+        ColorValue root = new ColorValue(208f / 255, 47f / 255, 199f / 255);
+        ColorValue[] analogous = root.analogousColors();
+        piece
+                .addFilter(new Noise()
+                        .addColor(root, 0.34)
+                        .addColor(analogous[0], 0.33)
+                        .addColor(analogous[1], 0.33)
+                )
+                .addFilter(new Rescale(8))
+                .addFilter(new Grow((int) (width * height)));
+
 
         LocalDateTime now = LocalDateTime.now();
         String signature = String.format(SIGNATURE_FORMAT, AUTHOR, now.format(DateTimeFormatter.ISO_LOCAL_DATE));
-        piece.addFilter(new Text(64, height - 64, signature, new ColorValue(0, 0, 0, 0.66f), new Font("Monospaced", Font.PLAIN, 24)));
+        piece.addFilter(new Text(64, height - 64, signature, new ColorValue(1, 1, 1, 0.66f), new Font("Monospaced", Font.BOLD, 24)));
         piece.build("png");
     }
 
