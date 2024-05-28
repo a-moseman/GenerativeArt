@@ -37,7 +37,6 @@ public class Main {
                 .addFilter(new GaussianBlur(3))
                 .addFilter(new Rectangle(width / 2 - 800 / 2, height / 2 - 400 / 2, 800, 400, 0, root.monochromaticColor(), false, 6));
 
-
         LocalDateTime now = LocalDateTime.now();
         String signature = String.format(SIGNATURE_FORMAT, AUTHOR, now.format(DateTimeFormatter.ISO_LOCAL_DATE));
         piece.addFilter(new Text(64, height - 64, signature, new ColorValue(1, 1, 1, 0.66f), new Font("Monospaced", Font.BOLD, 24)));
