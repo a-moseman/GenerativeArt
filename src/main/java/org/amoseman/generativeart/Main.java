@@ -1,13 +1,11 @@
 package org.amoseman.generativeart;
 
 import org.amoseman.generativeart.filter.*;
-import org.amoseman.generativeart.filter.Composite;
 import org.amoseman.generativeart.filter.blur.GaussianBlur;
 import org.amoseman.generativeart.filter.draw.Rectangle;
 import org.amoseman.generativeart.filter.draw.Text;
 import org.amoseman.generativeart.filter.noise.Noise;
 import org.amoseman.generativeart.image.ColorValue;
-import org.amoseman.generativeart.image.ImageData;
 import org.amoseman.generativeart.piece.Piece;
 
 import java.awt.*;

@@ -1,5 +1,6 @@
-package org.amoseman.generativeart.filter;
+package org.amoseman.generativeart.filter.combine;
 
+import org.amoseman.generativeart.filter.Filter;
 import org.amoseman.generativeart.image.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
 
