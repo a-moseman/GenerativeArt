@@ -1,14 +1,14 @@
 # My Generative Art Project
 
-As of now, this project is written entirely in Java 17. Currently I have no plans to change this.
+This is my project in which I play around with procedural generation to create art of sorts. As of now, the project is written in Java 17. Each branch of the repository corresponds to a piece, identified by the seed used.
 
-Each branch corresponds to a piece, identified by the seed used.
+## How To
 
 To reconstruct a given piece, checkout to the noted commit and use the provided seed. 
 
 ## Libraries
 
-![SpongePowered's noise](https://github.com/SpongePowered/noise)
+![SpongePowered's noise](https://github.com/SpongePowered/noise) - _Currently only used in the FBMNoise class for simplex noise._
 
 ## Pieces
 
