@@ -4,10 +4,10 @@ import org.amoseman.generativeart.image.ImageData;
 
 import java.util.random.RandomGenerator;
 
-public class Merge implements Filter {
+public class Add implements Filter {
     private final ImageData foreground;
 
-    public Merge(ImageData foreground) {
+    public Add(ImageData foreground) {
         this.foreground = foreground;
     }
 
