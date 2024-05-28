@@ -2,6 +2,7 @@ package org.amoseman.generativeart.filter;
 
 import org.amoseman.generativeart.ColorValue;
 import org.amoseman.generativeart.image.ImageData;
+import org.amoseman.generativeart.vector.Vector;
 
 import java.util.Random;
 
@@ -39,31 +40,28 @@ public class Grow implements Filter {
                 continue;
             }
 
-            int dx = 0;
-            int dy = 0;
-            do {
-                switch (random.nextInt(4)) {
-                    case 0:
-                        dx = 1;
-                        dy = 0;
-                        break;
-                    case 1:
-                        dx = -1;
-                        dy = 0;
-                        break;
-                    case 2:
-                        dx = 0;
-                        dy = 1;
-                        break;
-                    case 3:
-                        dx = 0;
-                        dy = -1;
-                        break;
-                }
-            } while (x + dx < 0 || x + dx >= data.getWidth() || y + dy < 0 || y + dy >= data.getHeight());
+            Vector growth = randomGrowthPosition(data, random, new Vector(x, y));
             ColorValue v = data.get(x, y);
-            data.set(x + dx, y + dy, v);
+            data.set((int) growth.x, (int) growth.y, v);
             i++;
         }
+    }
+
+    private Vector randomGrowthPosition(ImageData data, Random random, Vector origin) {
+        Vector growth;
+        do {
+            growth = origin.add(randomShift(random));
+        } while (growth.x < 0 || growth.x >= data.getWidth() || growth.y < 0 || growth.y >= data.getHeight());
+        return growth;
+    }
+
+    private Vector randomShift(Random random) {
+        return switch (random.nextInt(4)) {
+            case 0 -> Vector.UP;
+            case 1 -> Vector.DOWN;
+            case 2 -> Vector.RIGHT;
+            case 3 -> Vector.LEFT;
+            default -> throw new IllegalStateException("Unexpected value: " + random.nextInt(4));
+        };
     }
 }
